@@ -2,14 +2,14 @@ package com.ldinkaofficial;
 
 public class Cell{
 
-    private boolean isRiched = false;
+    private boolean inMaze = false;
 
-    public boolean isRiched() {
-        return isRiched;
+    public boolean isInMaze() {
+        return inMaze;
     }
 
-    public void setRiched() {
-        isRiched = true;
+    public void setInMaze() {
+        inMaze = true;
     }
     private boolean rightWall = true;
     private boolean leftWall = true;
@@ -32,19 +32,19 @@ public class Cell{
         return downWall;
     }
 
-    public void setRightWall(boolean rightWall) {
-        this.rightWall = rightWall;
+    public void breakRightWall() {
+        rightWall = false;
     }
 
-    public void setLeftWall(boolean leftWall) {
-        this.leftWall = leftWall;
+    public void breakLeftWall() {
+        leftWall = false;
     }
 
-    public void setUpWall(boolean upWall) {
-        this.upWall = upWall;
+    public void breakUpWall() {
+        upWall = false;
     }
 
-    public void setDownWall(boolean downWall) {
-        this.downWall = downWall;
+    public void breakDownWall() {
+        downWall = false;
     }
 }
