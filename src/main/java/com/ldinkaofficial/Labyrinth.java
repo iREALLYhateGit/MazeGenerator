@@ -4,14 +4,16 @@ import java.util.*;
 
 public class Labyrinth {
 
-    private final int mazeSize;
+    private final int mazeSizeX;
+    private final int mazeSizeY;
     private final int numberOfExits;
 
 
     private Random random = new Random();
 
-    public Labyrinth(int mazeSize, int numberOfExits) {
-        this.mazeSize = mazeSize;
+    public Labyrinth(int mazeSizeX, int mazeSizeY, int numberOfExits) {
+        this.mazeSizeX = mazeSizeX;
+        this.mazeSizeY = mazeSizeY;
         this.numberOfExits = numberOfExits;
         fillMaze();
         generateMaze();
@@ -21,10 +23,10 @@ public class Labyrinth {
     ArrayList<Pair> pairList = new ArrayList<>();
     ArrayList<Pair> exitPairs = new ArrayList<>();
     private void fillMaze(){
-        for (int i = 0; i < mazeSize; i++) {
-            for (int j = 0; j < mazeSize; j++) {
+        for (int i = 0; i < mazeSizeY; i++) {
+            for (int j = 0; j < mazeSizeX; j++) {
                 cellMap.put(new Pair(i,j), new Cell());
-                if(i == 0 || i == mazeSize - 1 || j == 0 || j == mazeSize - 1)
+                if(i == 0 || i == mazeSizeY - 1 || j == 0 || j == mazeSizeX - 1)
                     exitPairs.add(new Pair(i,j));
             }
         }
@@ -38,8 +40,8 @@ public class Labyrinth {
 
         int randomNumberOfPair;
 
-        pairList.add(new Pair(random.nextInt(0,mazeSize),
-                    random.nextInt(0,mazeSize)));
+        pairList.add(new Pair(random.nextInt(0,mazeSizeY),
+                    random.nextInt(0,mazeSizeX)));
 
 
         while(!pairList.isEmpty()){
@@ -51,7 +53,7 @@ public class Labyrinth {
 
             oppositePair.setLocation(currentPair.getI(), currentPair.getJ() + 1);
             oppositeCell  = cellMap.get(oppositePair);
-            if(currentCell.hasRightWall() && currentPair.getJ() + 1 < mazeSize
+            if(currentCell.hasRightWall() && currentPair.getJ() + 1 < mazeSizeX
                     && !oppositeCell.isInMaze()){
                 currentCell.breakRightWall();
                 cellMap.get(oppositePair).breakLeftWall();
@@ -71,7 +73,7 @@ public class Labyrinth {
 
             oppositePair.setLocation(currentPair.getI() + 1, currentPair.getJ());
             oppositeCell  = cellMap.get(oppositePair);
-            if(currentCell.hasDownWall() && currentPair.getI() + 1 < mazeSize
+            if(currentCell.hasDownWall() && currentPair.getI() + 1 < mazeSizeY
                     && !oppositeCell.isInMaze()){
                 currentCell.breakDownWall();
                 cellMap.get(oppositePair).breakUpWall();
@@ -97,11 +99,11 @@ public class Labyrinth {
             currentCell = cellMap.get(currentPair);
             if(currentPair.getI() == 0)
                 currentCell.breakUpWall();
-            else if(currentPair.getI() == mazeSize - 1)
+            else if(currentPair.getI() == mazeSizeY - 1)
                 currentCell.breakDownWall();
             else if(currentPair.getJ() == 0)
                 currentCell.breakLeftWall();
-            else if(currentPair.getJ() == mazeSize - 1)
+            else if(currentPair.getJ() == mazeSizeX - 1)
                 currentCell.breakRightWall();
         }
     }

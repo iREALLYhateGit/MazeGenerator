@@ -6,17 +6,20 @@ import java.awt.*;
 public class MazeFrame extends JFrame {
 
     private MazePanel mazePanel;
-    private final int mazeSize;
+    private final int mazeSizeX;
+    private final int mazeSizeY;
     private int thickness;
     private int blockSize;
-    private int offset;
+    private int offsetX;
+    private int offsetY;
     private final int numberOfExits;
 
     private JScrollPane scrollPane;
 
 
-    public MazeFrame(int mazeSize, int numberOfExits) {
-        this.mazeSize = mazeSize;
+    public MazeFrame(int mazeSizeX, int mazeSizeY, int numberOfExits) {
+        this.mazeSizeX = mazeSizeX;
+        this.mazeSizeY = mazeSizeY;
         this.numberOfExits = numberOfExits;
         frameBasicInitialize();
         addPanels();
@@ -29,12 +32,13 @@ public class MazeFrame extends JFrame {
     }
 
     private void addPanels(){
-        if(mazeSize <= 20){
+        if(mazeSizeX <= 20 && mazeSizeY <= 20){
             blockSize = 14;
             thickness = 4;
-            setSize(300 + thickness + 20, 300 + thickness + 20 + 32);
+            setSize(300 + thickness + 20, 300 + thickness + 20 + 35);
             setResizable(false);
-            offset = (getSize().width - blockSize*mazeSize - thickness - 10)/2;
+            offsetX = (getSize().width - blockSize*mazeSizeX - thickness - 10)/2;
+            offsetY = (getSize().height - blockSize*mazeSizeY - thickness - 35)/2;
             mazePanel = getMazePanel();
             mazePanel.setPreferredSize(new Dimension(300 + thickness + 20, 300 + thickness + 20 + 32));
             add(mazePanel);
@@ -44,9 +48,10 @@ public class MazeFrame extends JFrame {
             thickness = 4;
             setSize(300 + thickness + 20, 300 + thickness + 20 + 32);
             setResizable(true);
-            offset = 20;
+            offsetX = 20;
+            offsetY = 20;
             mazePanel = getMazePanel();
-            mazePanel.setPreferredSize(new Dimension(blockSize*mazeSize + thickness + 40, blockSize*mazeSize + thickness + 40));
+            mazePanel.setPreferredSize(new Dimension(blockSize*mazeSizeX + thickness + 40, blockSize*mazeSizeY + thickness + 40));
             addScrollPane();
             mazePanel.setAutoscrolls(true);
         }
@@ -61,9 +66,10 @@ public class MazeFrame extends JFrame {
 
     private MazePanel getMazePanel() {
 
-        MazePanel finalMazePanel = new MazePanel(mazeSize,thickness, blockSize, offset, numberOfExits);
+        MazePanel finalMazePanel = new MazePanel(mazeSizeX, mazeSizeY,thickness,
+                blockSize, offsetX, offsetY, numberOfExits);
         finalMazePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10,5));
-        finalMazePanel.setBackground(Color.MAGENTA);
+        finalMazePanel.setBackground(Color.LIGHT_GRAY);
 
         return finalMazePanel;
     }

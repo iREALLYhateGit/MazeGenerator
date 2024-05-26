@@ -17,8 +17,9 @@ public class StartPanel extends JPanel {
         setLayout(new FlowLayout(FlowLayout.CENTER,10,5));
         jButtonsCreation();
 
+        add(mazeSizeXButton);
+        add(mazeSizeYButton);
         add(amountOfExitsButton);
-        add(mazeSizeButton);
         add(createMazeButton, BorderLayout.SOUTH);
 
         try {
@@ -30,24 +31,28 @@ public class StartPanel extends JPanel {
         }
         createMazeButton.addActionListener(new MazeCreateButtonListener(startFrame));
 
-        mazeSizeButton.addActionListener(new MazeSizeSetButtonListener(startFrame));
+        mazeSizeXButton.addActionListener(new MazeSizeXSetButtonListener(startFrame));
+        mazeSizeYButton.addActionListener(new MazeSizeYSetButtonListener(startFrame));
 
-        amountOfExitsButton.addActionListener(new AmountOfExitsButtonListener(startFrame));
+        amountOfExitsButton.addActionListener(new NumberOfExitsButtonListener(startFrame));
     }
 
     JButton amountOfExitsButton;
-    JButton mazeSizeButton;
+    JButton mazeSizeXButton;
+    JButton mazeSizeYButton;
     JButton createMazeButton;
     Image background;
 
 
     private void jButtonsCreation(){
         amountOfExitsButton = new JButton("Enter amount of exits");
-        amountOfExitsButton.setPreferredSize(new Dimension(170,30));
-        mazeSizeButton = new JButton("Set a maze size");
-        mazeSizeButton.setPreferredSize(new Dimension(150,30));
+        amountOfExitsButton.setPreferredSize(new Dimension(170,25));
+        mazeSizeXButton = new JButton("Set a maze width");
+        mazeSizeXButton.setPreferredSize(new Dimension(150,25));
+        mazeSizeYButton = new JButton("Set a maze height");
+        mazeSizeYButton.setPreferredSize(new Dimension(150,25));
         createMazeButton = new JButton("Create maze");
-        createMazeButton.setPreferredSize(new Dimension(120,30));
+        createMazeButton.setPreferredSize(new Dimension(120,25));
     }
     @Override
     public void paintComponent(Graphics g) {
@@ -56,6 +61,8 @@ public class StartPanel extends JPanel {
         g.drawImage(background,0,0,getWidth(),getHeight(),null);
     }
 }
+
+
 class MazeCreateButtonListener implements ActionListener {
 
     private StartFrame currentFrame;
@@ -76,7 +83,8 @@ class MazeCreateButtonListener implements ActionListener {
         else{
             SwingUtilities.invokeLater(
                     ()-> {
-                        new MazeFrame(currentFrame.getMazeSize(), currentFrame.getAmountOfExits());
+                        new MazeFrame(currentFrame.getMazeSizeX(),currentFrame.getMazeSizeY(),
+                                currentFrame.getAmountOfExits());
                         MazeFrame.setDisplayed(true);
                     });
         }
@@ -86,24 +94,24 @@ class MazeCreateButtonListener implements ActionListener {
 
 
 
-class MazeSizeSetButtonListener implements ActionListener {
+class MazeSizeXSetButtonListener implements ActionListener {
 
     private StartFrame currentFrame;
-    public MazeSizeSetButtonListener(StartFrame currentFrame) {
+    public MazeSizeXSetButtonListener(StartFrame currentFrame) {
         this.currentFrame = currentFrame;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        int gotMazeSize = 0;
+        int gotMazeSizeX = 0;
         try{
-            gotMazeSize = Integer.parseInt(JOptionPane.showInputDialog("Enter a maze size"));
+            gotMazeSizeX = Integer.parseInt(JOptionPane.showInputDialog("Enter the width of the maze"));
             try{
-                if(gotMazeSize < 2 || gotMazeSize > 1000){
+                if(gotMazeSizeX < 2 || gotMazeSizeX > 1000){
                     throw new UndesiredMazeSizeException();
                 }
                 else{
-                    currentFrame.setMazeSize(gotMazeSize);
+                    currentFrame.setMazeSizeX(gotMazeSizeX);
                 }
             }catch (UndesiredMazeSizeException ex){
                 JOptionPane.showMessageDialog(currentFrame,"Wrong size of maze."
@@ -119,10 +127,43 @@ class MazeSizeSetButtonListener implements ActionListener {
 
 
 
-class AmountOfExitsButtonListener implements ActionListener {
+class MazeSizeYSetButtonListener implements ActionListener {
 
     private StartFrame currentFrame;
-    public AmountOfExitsButtonListener(StartFrame currentFrame) {
+    public MazeSizeYSetButtonListener(StartFrame currentFrame) {
+        this.currentFrame = currentFrame;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        int gotMazeSizeY = 0;
+        try{
+            gotMazeSizeY = Integer.parseInt(JOptionPane.showInputDialog("Enter the height of the maze"));
+            try{
+                if(gotMazeSizeY < 2 || gotMazeSizeY > 1000){
+                    throw new UndesiredMazeSizeException();
+                }
+                else{
+                    currentFrame.setMazeSizeY(gotMazeSizeY);
+                }
+            }catch (UndesiredMazeSizeException ex){
+                JOptionPane.showMessageDialog(currentFrame,"Wrong size of maze."
+                                + " The size should be between 2 and 1000.",
+                        "Alert",JOptionPane.WARNING_MESSAGE);
+            }
+        }catch (NumberFormatException ex){
+            JOptionPane.showMessageDialog(currentFrame,"Wrong format, number should be entered",
+                    "Alert",JOptionPane.WARNING_MESSAGE);
+        }
+    }
+}
+
+
+
+class NumberOfExitsButtonListener implements ActionListener {
+
+    private StartFrame currentFrame;
+    public NumberOfExitsButtonListener(StartFrame currentFrame) {
         this.currentFrame = currentFrame;
     }
 
@@ -130,9 +171,10 @@ class AmountOfExitsButtonListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         int gotAmountOfExits = 0;
         try{
-            gotAmountOfExits = Integer.parseInt(JOptionPane.showInputDialog("Enter a maze size"));
+            gotAmountOfExits = Integer.parseInt(JOptionPane.showInputDialog("Enter number of exits"));
             try{
-                if(gotAmountOfExits <= 0 || gotAmountOfExits >= currentFrame.getMazeSize() *2){
+                if(gotAmountOfExits <= 0 || gotAmountOfExits >= currentFrame.getMazeSizeX()
+                        + currentFrame.getMazeSizeY()){
                     throw new WrongNumberOfExitsException();
                 }
                 else{
