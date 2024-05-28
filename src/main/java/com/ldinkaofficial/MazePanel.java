@@ -37,19 +37,23 @@ public class MazePanel extends JPanel {
                 cell = labyrinth.cellMap.get(new Pair(i,j));
                 if(cell.hasRightWall()) {
                     // draw vertical line on the right border of the cell
-                    g2.drawLine(offsetX + j * blockSize + blockSize, offsetY + i * blockSize, offsetX + blockSize + j * blockSize, offsetY + blockSize + i * blockSize);
+                    g2.drawLine(offsetX + j * blockSize + blockSize, offsetY + i * blockSize,
+                            offsetX + blockSize + j * blockSize, offsetY + blockSize + i * blockSize);
                 }
                 if(cell.hasDownWall()) {
                     // draw horizontal line on the bottom border of the cell
-                    g2.drawLine(offsetX + j * blockSize, offsetY + i * blockSize + blockSize, offsetX + j * blockSize + blockSize, offsetY + i * blockSize + blockSize);
+                    g2.drawLine(offsetX + j * blockSize, offsetY + i * blockSize + blockSize,
+                            offsetX + j * blockSize + blockSize, offsetY + i * blockSize + blockSize);
                 }
                 if(cell.hasLeftWall()) {
                     // draw vertical line on the left border of the cell
-                    g2.drawLine(offsetX + j * blockSize, offsetY + i * blockSize, offsetX + j * blockSize, offsetY + blockSize + i * blockSize);
+                    g2.drawLine(offsetX + j * blockSize, offsetY + i * blockSize,
+                            offsetX + j * blockSize, offsetY + blockSize + i * blockSize);
                 }
                 if(cell.hasUpWall()) {
                     // draw horizontal line on the top border of the cell
-                    g2.drawLine(offsetX + j * blockSize, offsetY + i * blockSize, offsetX + blockSize + j * blockSize, offsetY + i * blockSize);
+                    g2.drawLine(offsetX + j * blockSize, offsetY + i * blockSize,
+                            offsetX + blockSize + j * blockSize, offsetY + i * blockSize);
                 }
             }
         }

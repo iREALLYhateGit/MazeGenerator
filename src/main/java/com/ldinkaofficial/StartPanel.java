@@ -76,7 +76,7 @@ class MazeCreateButtonListener implements ActionListener {
             JOptionPane.showMessageDialog(currentFrame,"Frame with maze is already exists",
                     "Alert", JOptionPane.WARNING_MESSAGE);
         }
-        else if (currentFrame.checkWhetherParametersSet()) {
+        else if (!currentFrame.checkWhetherParametersSet()) {
             JOptionPane.showMessageDialog(currentFrame,"You should enter parameters of maze " +
                     "before creating one", "Alert", JOptionPane.WARNING_MESSAGE);
         }
@@ -84,7 +84,7 @@ class MazeCreateButtonListener implements ActionListener {
             SwingUtilities.invokeLater(
                     ()-> {
                         new MazeFrame(currentFrame.getMazeSizeX(),currentFrame.getMazeSizeY(),
-                                currentFrame.getAmountOfExits());
+                                currentFrame.getNumberOfExits());
                         MazeFrame.setDisplayed(true);
                     });
         }
@@ -178,7 +178,7 @@ class NumberOfExitsButtonListener implements ActionListener {
                     throw new WrongNumberOfExitsException();
                 }
                 else{
-                    currentFrame.setAmountOfExits(gotAmountOfExits);
+                    currentFrame.setNumberOfExits(gotAmountOfExits);
                 }
             }catch (WrongNumberOfExitsException ex){
                 JOptionPane.showMessageDialog(currentFrame,"Wrong number of exits. The number" +

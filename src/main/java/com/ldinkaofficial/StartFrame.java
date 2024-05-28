@@ -10,7 +10,7 @@ public class StartFrame extends JFrame {
     private final StartPanel startPanel;
     private int mazeSizeX = WRONG_MAZE_SIZE;
     private int mazeSizeY = WRONG_MAZE_SIZE;
-    private int amountOfExits = WRONG_NUMBER_OF_EXITS;
+    private int numberOfExits = WRONG_NUMBER_OF_EXITS;
 
     public StartFrame() {
         startFrameInitialize();
@@ -31,8 +31,8 @@ public class StartFrame extends JFrame {
     }
 
     public boolean checkWhetherParametersSet(){
-        return mazeSizeX == WRONG_MAZE_SIZE
-                || amountOfExits == WRONG_NUMBER_OF_EXITS || mazeSizeY == WRONG_MAZE_SIZE;
+        return !(mazeSizeX == WRONG_MAZE_SIZE
+                || numberOfExits == WRONG_NUMBER_OF_EXITS || mazeSizeY == WRONG_MAZE_SIZE);
     }
 
     public int getMazeSizeX() {
@@ -49,12 +49,12 @@ public class StartFrame extends JFrame {
         this.mazeSizeY = mazeSizeY;
     }
 
-    public int getAmountOfExits() {
-        return amountOfExits;
+    public int getNumberOfExits() {
+        return numberOfExits;
     }
 
-    public void setAmountOfExits(int amountOfExits) {
-        this.amountOfExits = amountOfExits;
+    public void setNumberOfExits(int numberOfExits) {
+        this.numberOfExits = numberOfExits;
     }
 }
 
