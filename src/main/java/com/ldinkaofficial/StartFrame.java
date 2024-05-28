@@ -30,9 +30,10 @@ public class StartFrame extends JFrame {
         return new StartPanel(this);
     }
 
-    public boolean checkWhetherParametersSet(){
-        return !(mazeSizeX == WRONG_MAZE_SIZE
-                || numberOfExits == WRONG_NUMBER_OF_EXITS || mazeSizeY == WRONG_MAZE_SIZE);
+    public boolean checkWhetherParametersSetCorrect(){
+        return (mazeSizeX >= 2 && mazeSizeX < 1000 &&
+                numberOfExits >= 1 && numberOfExits < mazeSizeX + mazeSizeY
+                && mazeSizeY >= 2 && mazeSizeY < 1000);
     }
 
     public int getMazeSizeX() {
